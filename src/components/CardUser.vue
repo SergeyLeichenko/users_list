@@ -3,7 +3,7 @@
     class="card mb-3 bg-secondary-subtle"
     style="width: 15rem;"
   >
-    <div class="image" @click="$emit('detailProfile', props.user_data.id)">
+    <div class="image" @click="$emit('detailProfile', props.user_data)">
       <img
         src="../assets/images/face-6.jpg"
         class="card-img-top rounded-circle p-5"

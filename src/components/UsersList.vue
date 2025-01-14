@@ -45,10 +45,12 @@ const filteredUserSList = computed(() => {
   })
 })
 
-const getUserId = (id) => {
-  if (id) {
-    userStore.userId = id
-    router.push({ name: 'profile' })
+const getUserId = (user) => {
+  if (user.id) {
+    userStore.userId = user.id
+    let name = user.name.replace(/(\s?-\s?)|\s/g, '_')
+
+    router.push({ name: 'profile', params: { name: name } })
   }
 }
 
