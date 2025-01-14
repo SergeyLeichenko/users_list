@@ -1,6 +1,26 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="container">
+    <div
+      class="row"
+      v-if="errorMessages !== ''"
+    >
+      <div class="col">
+        <!-- error messages -->
+        <div
+          class="alert alert-danger d-flex flex-column text-center"
+          role="alert"
+        >
+          <p>{{ errorMessages }}</p>
+          <p><router-link :to="{ name: 'home' }">Back to dashboard</router-link></p>
+
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      v-else
+    >
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
@@ -86,18 +106,23 @@
 
 <script setup>
 import { onMounted, ref } from "vue"
+import axios from "axios"
+import { useStoreUser } from "@/stores/users"
+
+const userStore = useStoreUser()
 
 const userDetail = ref({})
+const errorMessages = ref('')
 
-onMounted(() => {
-  if (localStorage.getItem("user")) {
-    try {
-      userDetail.value = JSON.parse(
-        localStorage.getItem("user")
-      );
-    } catch {
-      localStorage.removeItem("user");
-    }
+onMounted(async () => {
+  try {
+    await axios
+      .get(`users/${userStore.userId}`)
+      .then((response) => {
+        userDetail.value = response.data
+      })
+  } catch (error) {
+    errorMessages.value = error.message
   }
 })
 </script>
@@ -108,6 +133,7 @@ onMounted(() => {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0;
 }
+
 .avatar {
   width: 100%;
   height: auto;

@@ -27,7 +27,5 @@ import Footer from '@/components/TheFooter.vue'
 </script>
 
 <style lang="scss" scoped>
-.table tbody tr {
-  cursor: pointer;
-}
+
 </style>

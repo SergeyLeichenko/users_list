@@ -18,7 +18,7 @@
         v-for="user in filteredUserSList"
         :key="user.id"
         :user_data="user"
-        @detailProfile="getProfile"
+        @detailProfile="getUserId"
       />
     </div>
   </div>
@@ -29,6 +29,9 @@ import CardUser from "./CardUser.vue";
 import { ref, onMounted, computed } from "vue"
 import axios from "axios"
 import router from "@/router/index"
+import { useStoreUser } from "@/stores/users"
+
+const userStore = useStoreUser()
 
 const users = ref([])
 const findUser = ref('')
@@ -42,9 +45,9 @@ const filteredUserSList = computed(() => {
   })
 })
 
-const getProfile = (user) => {
-  if (user) {
-    localStorage.setItem("user", JSON.stringify(user))
+const getUserId = (id) => {
+  if (id) {
+    userStore.userId = id
     router.push({ name: 'profile' })
   }
 }
@@ -54,13 +57,14 @@ onMounted(async () => {
     .get("users")
     .then((response) => {
       users.value = response.data.slice(0, 10)
-    });
-});
+    })
+})
 </script>
 
 <style lang="scss" scoped>
 .input-search {
   width: 40%;
+
   @media screen and (max-width: 533px) {
     width: 100%;
   }
