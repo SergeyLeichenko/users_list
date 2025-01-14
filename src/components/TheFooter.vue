@@ -15,7 +15,7 @@
         </div>
       </div>
     </nav>
-    <p class="copyright text-center text-white pb-3">
+    <p class="copyright text-center text-white">
       made with love for a better web
     </p>
   </footer>
@@ -42,5 +42,6 @@ export default {
   width: 100%;
   position: absolute;
   bottom: 0;
+  left: 0;
 }
 </style>
